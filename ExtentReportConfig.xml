@@ -1,0 +1,8 @@
+﻿<!-- Optional config for ExtentHtmlReporter. You can reference it or configure in code. -->
+<extentreports>
+  <configuration>
+    <reportName>WebAutomationSuite Report</reportName>
+    <documentTitle>Automation Report</documentTitle>
+    <encoding>utf-8</encoding>
+  </configuration>
+</extentreports>
