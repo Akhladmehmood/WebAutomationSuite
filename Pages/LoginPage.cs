@@ -11,6 +11,8 @@ namespace WebAutomationSuite.Pages
         private By UsernameInput => By.Id("user-name");
         private By PasswordInput => By.Id("password");
         private By LoginButton => By.Id("login-button");
+        private By VisibleUsername => By.XPath("//div[@id='login_credentials']");
+        private By VisiblePassword => By.XPath("//div[@class='login_password']");
         private By LoggedInIndicator => By.CssSelector(".app_logo"); // example
 
         public LoginPage(IWebDriver driver, string baseUrl)
@@ -25,6 +27,13 @@ namespace WebAutomationSuite.Pages
 
         public void EnterPassword(string password) => _driver.FindElement(PasswordInput).ClearThenSendKeys(password);
 
+        public string GetStandardUser()
+        {
+            string all = _driver.FindElement(VisibleUsername).Text;
+            return all.Split('\n').FirstOrDefault(x => x.Contains("standard_user"));
+        }
+
+        public string GetVisiblePassword() => _driver.FindElement(VisiblePassword).Text; 
         public void ClickLogin() => _driver.FindElement(LoginButton).Click();
 
         public bool IsLoggedIn()
