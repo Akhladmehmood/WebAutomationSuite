@@ -8,6 +8,13 @@
     }
 
     parameters {
+
+        string(
+        name: 'GIT_BRANCH',
+        defaultValue: 'AddJenkinsFile',
+        description: 'Git branch to build'
+        )
+
         choice(
             name: 'ENV',
             choices: ['dev', 'qa', 'staging'],
