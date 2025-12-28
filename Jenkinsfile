@@ -1,0 +1,94 @@
+﻿pipeline {
+    agent any
+
+    options {
+        timestamps()
+        disableConcurrentBuilds()
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+    }
+
+    parameters {
+        choice(
+            name: 'ENV',
+            choices: ['dev', 'qa', 'staging'],
+            description: 'Select environment'
+        )
+
+        choice(
+            name: 'TEST_TYPE',
+            choices: ['Smoke', 'Regression'],
+            description: 'Select test suite'
+        )
+    }
+
+    environment {
+        GIT_REPO_URL   = 'https://github.com/Akhladmehmood/WebAutomationSuite'
+        GIT_BRANCH     = 'main'
+        GIT_CREDENTIAL = 'git-creds'
+        REPORT_DIR     = 'TestResults/ExtentReports'
+    }
+
+    stages {
+
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
+
+        stage('Checkout Code') {
+            steps {
+                git branch: "${GIT_BRANCH}",
+                    credentialsId: "${GIT_CREDENTIAL}",
+                    url: "${GIT_REPO_URL}"
+            }
+        }
+
+        stage('Restore Dependencies') {
+            steps {
+                bat 'dotnet restore'
+            }
+        }
+
+        stage('Build Solution') {
+            steps {
+                bat 'dotnet build --no-restore'
+            }
+        }
+
+        stage('Execute Tests') {
+            steps {
+                bat """
+                dotnet test ^
+                --no-build ^
+                --filter TestCategory=${TEST_TYPE} ^
+                --logger trx
+                """
+            }
+        }
+    }
+
+    post {
+
+        always {
+            echo 'Publishing Extent Report'
+
+            publishHTML([
+                allowMissing: true,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: "${REPORT_DIR}",
+                reportFiles: 'index.html',
+                reportName: "Automation Report - ${ENV} - ${TEST_TYPE}"
+            ])
+        }
+
+        success {
+            echo 'BUILD SUCCESSFUL'
+        }
+
+        failure {
+            echo 'BUILD FAILED - CHECK REPORTS'
+        }
+    }
+}
