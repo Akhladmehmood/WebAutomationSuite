@@ -22,7 +22,7 @@ pipeline {
     }
 
     environment {
-        GIT_REPO_URL   = 'https://github.com/your-org/your-automation-repo.git'
+        GIT_REPO_URL   = 'https://github.com/Akhladmehmood/WebAutomationSuite.git'
         GIT_BRANCH     = 'AddjenkinsFile'   // 👈 branch fixed here
         GIT_CREDENTIAL = 'git-creds'
         REPORT_DIR     = 'TestResults/ExtentReports'
