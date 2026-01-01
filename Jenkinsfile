@@ -22,24 +22,17 @@ pipeline {
     }
 
     environment {
-        GIT_REPO_URL   = 'https://github.com/Akhladmehmood/WebAutomationSuite.git'
-        GIT_BRANCH     = 'AddjenkinsFile'   // 👈 branch fixed here
-        GIT_CREDENTIAL = 'git-creds'
-        REPORT_DIR     = 'TestResults/ExtentReports'
+        GIT_REPO_URL = 'https://github.com/Akhladmehmood/WebAutomationSuite.git'
+        GIT_BRANCH   = 'AddjenkinsFile'
+        REPORT_DIR   = 'TestResults/ExtentReports'
     }
 
     stages {
 
-        stage('Clean Workspace') {
-            steps {
-                cleanWs()
-            }
-        }
-
         stage('Checkout Code') {
             steps {
+                cleanWs()
                 git branch: "${GIT_BRANCH}",
-                    credentialsId: "${GIT_CREDENTIAL}",
                     url: "${GIT_REPO_URL}"
             }
         }
@@ -61,7 +54,7 @@ pipeline {
                 bat """
                 dotnet test ^
                 --no-build ^
-                --filter TestCategory=${TEST_TYPE} ^
+                --filter TestCategory=${params.TEST_TYPE} ^
                 --logger trx
                 """
             }
@@ -79,7 +72,7 @@ pipeline {
                 keepAll: true,
                 reportDir: "${REPORT_DIR}",
                 reportFiles: 'index.html',
-                reportName: "Automation Report - ${ENV} - ${TEST_TYPE}"
+                reportName: "Automation Report - ${params.ENV} - ${params.TEST_TYPE}"
             ])
         }
 
