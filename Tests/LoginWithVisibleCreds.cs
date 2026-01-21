@@ -12,6 +12,7 @@ namespace WebAutomationSuite.Tests
     internal class LoginWithVisibleCreds : TestBase
     {
         [Test]
+        [Category("Regression")]
         public void Login_UsingVisibleCredentials()
         {
             // Create login page object using the Driver from BaseTest

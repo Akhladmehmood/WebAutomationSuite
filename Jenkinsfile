@@ -23,7 +23,7 @@ pipeline {
 
     environment {
         GIT_REPO_URL = 'https://github.com/Akhladmehmood/WebAutomationSuite.git'
-        GIT_BRANCH   = 'AddjenkinsFile'
+        GIT_BRANCH   = 'Main'
         REPORT_DIR   = 'TestResults/ExtentReports'
     }
 
