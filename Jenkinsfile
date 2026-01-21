@@ -23,7 +23,7 @@ pipeline {
 
     environment {
         GIT_REPO_URL = 'https://github.com/Akhladmehmood/WebAutomationSuite.git'
-        GIT_BRANCH   = 'Main'
+        GIT_BRANCH   = 'main'
         REPORT_DIR   = 'TestResults/ExtentReports'
     }
 
