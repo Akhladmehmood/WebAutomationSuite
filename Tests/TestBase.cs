@@ -62,13 +62,17 @@ namespace WebAutomationSuite.Tests
             {
                 // Ignored — ensure teardown doesn’t block report generation
             }
+
+            {
+                try
+                {
+                    Extent?.Flush();
+                }
+                catch { }
+            }
         }
 
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            Extent?.Flush();
-        }
+        
 
         private void CaptureScreenshot()
         {
