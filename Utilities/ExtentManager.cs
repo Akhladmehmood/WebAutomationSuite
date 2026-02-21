@@ -2,6 +2,7 @@
 using AventStack.ExtentReports.Reporter;
 using System;
 using System.IO;
+using NUnit.Framework;
 
 namespace WebAutomationSuite.Utilities
 {
