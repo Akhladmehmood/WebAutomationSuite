@@ -9,6 +9,8 @@ namespace WebAutomationSuite.Tests
     public class LoginTests : TestBase
     {
         [Test]
+        [Category("Regression")]
+
         public void SuccessfulLoginTest()
         {
             var config = ConfigReader.GetConfig();
