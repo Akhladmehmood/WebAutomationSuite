@@ -14,8 +14,7 @@ namespace WebAutomationSuite.Utilities
         {
             if (_extent == null)
             {
-                string reportPath = Path.Combine(TestContext.CurrentContext.WorkDirectory
-, "Reports");
+                string reportPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Reports");
                 Directory.CreateDirectory(reportPath);
 
                 string reportFile = Path.Combine(reportPath, $"TestReport_{DateTime.Now:yyyyMMdd_HHmmss}.html");

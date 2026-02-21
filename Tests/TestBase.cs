@@ -63,13 +63,13 @@ namespace WebAutomationSuite.Tests
                 // Ignored — ensure teardown doesn’t block report generation
             }
 
-            {
-                try
-                {
-                    Extent?.Flush();
-                }
-                catch { }
-            }
+           
+        }
+            [OneTimeTearDown]
+            public void OneTimeTearDown()
+        {
+          Extent?.Flush(); // ✅ Only once after all tests
+          Console.WriteLine("Flushing Extent Report...");
         }
 
         
